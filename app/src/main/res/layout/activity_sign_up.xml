@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cardview_shadow_start_color"
+    android:background="@color/cardview_light_background"
     tools:context=".sign_up">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -24,12 +24,14 @@
         app:layout_constraintVertical_bias="0.91">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/name_sign"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:cursorVisible="true"
             android:fontFamily="serif"
             android:hint="User Name"
+            android:inputType="textPersonName"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -47,12 +49,14 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mail_sign"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:cursorVisible="true"
             android:fontFamily="serif"
             android:hint="E-Mail"
+            android:inputType="textWebEmailAddress"
             android:singleLine="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="18sp" />
@@ -75,31 +79,35 @@
         app:passwordToggleTint="@color/colorPrimaryDark">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/pass_sign"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:cursorVisible="true"
             android:fontFamily="serif"
             android:hint="Password"
-            android:password="true"
+            android:inputType="textWebPassword"
+            android:password="false"
             android:singleLine="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="18sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btn_sign"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="100dp"
         android:layout_marginBottom="8dp"
         android:fontFamily="serif"
         android:text="Sign up"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textInputLayout5"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout5"
         app:layout_constraintVertical_bias="0.19" />
 
