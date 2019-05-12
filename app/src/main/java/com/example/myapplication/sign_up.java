@@ -1,21 +1,14 @@
 package com.example.myapplication;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
-
 import java.util.ArrayList;
 
 
@@ -34,7 +27,7 @@ public class sign_up extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        sharedPreferences = getPreferences(MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("MyPrefs",MODE_PRIVATE);
         editor = sharedPreferences.edit();
         email=(TextView)findViewById(R.id.mail_sign);
         name=(TextView)findViewById(R.id.name_sign);
@@ -63,11 +56,10 @@ public class sign_up extends AppCompatActivity {
                 String json = gson.toJson(objectList);
                 editor.putString("Values",json);
                 editor.commit();
-            }}
-        });
-
-
-
+                }
+            }
+        }
+        );
     }
 }
 
