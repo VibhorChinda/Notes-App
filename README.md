@@ -2,9 +2,14 @@
 
 This is a simple Notes app with following features:-
 
-it is a multi-user app
-multiple users can login and create thier different list of notes
-simply add notes using floating action button
-delete notes using delete dialog box
-saves list of notes and user values (name and password) as json objects
-simple and user-friendly UI/UX
+1.It is a multi-user app
+
+2.Multiple users can login and create thier different list of notes
+
+3.Simply add notes using floating action button
+
+4.Delete notes using delete dialog box
+
+5.Saves list of notes and user values (name and password) as json objects
+
+6.Simple and user-friendly UI/UX
