@@ -1,99 +1,91 @@
 package com.example.myapplication;
-
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
-
-
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-
 import android.widget.Button;
 import android.widget.TextView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
+    // Declaration
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     private TextView sign;
+    private int count;
     private TextView name;
     private TextView password;
     private Button login;
-    public ArrayList<Object>objectList1;
-    public ArrayList<Object>objectList2;
+    public ArrayList<Object>User_List;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sharedPreferences=getSharedPreferences("MyPrefs",MODE_PRIVATE);
-        editor=sharedPreferences.edit();
-
-        sign =(TextView)findViewById(R.id.sign_up);
         name=(TextView)findViewById(R.id.name_login);
         password=(TextView)findViewById(R.id.pass_login);
+        sharedPreferences=getSharedPreferences("MyPrefs",MODE_PRIVATE);
+        editor=sharedPreferences.edit();
+        User_List=new ArrayList<Object>();
+        sign =(TextView)findViewById(R.id.sign_up);
         login=(Button)findViewById(R.id.btn_login);
 
+
+        // Whenever Login Button is being clicked, it checks whether the details of users entered
+        // in the fields matches with the user list who have already signed in or not.
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
-                if(objectList1==null)
-                {
+                if(User_List==null) {
 
                      Snackbar snackbar3;
                      View context_View=findViewById(R.id.btn_login);
                      snackbar3=Snackbar.make(context_View,"No users registered",Snackbar.LENGTH_SHORT);
-                     View snackbarView = snackbar3.getView();
-                     snackbarView.setBackgroundColor(Color.RED);
                      snackbar3.show();
-
                 }
-                else
-                {
-                   if(name.getText().toString().matches("")||password.getText().toString().matches(""))
-                   {
+                else if(name.getText().toString().matches("")||password.getText().toString().matches("")) {
                          Snackbar snackbar2;
                          View context_View=findViewById(R.id.btn_login);
                          snackbar2=Snackbar.make(context_View,"User Name or Password Missing",Snackbar.LENGTH_SHORT);
-                         View snackbarView = snackbar2.getView();
-                         snackbarView.setBackgroundColor(Color.RED);
                          snackbar2.show();
-                   }
-
-                objectList1.addAll(objectList2);
-                for(Object obj : objectList1)
-                {
-                    if(obj.getName()!=null && obj.getName().contains(name.getText().toString())&& obj.getPassword()!=null && obj.getPassword().contains(password.getText().toString()))
+                }
+                else {
+                    for(Object obj : User_List) {
+                    if(obj.getName().contains(name.getText().toString()) && obj.getPassword().contains(password.getText().toString()))
                     {
-                        Snackbar snackbar;
-                        View context_View=findViewById(R.id.btn_login);
-                        snackbar=Snackbar.make(context_View,"User Successfully Logged In",Snackbar.LENGTH_SHORT);
-                        snackbar.show();
+                        count = 1;
+                        break;
+                    }
+                    else
+                        count = 0;
+                }
+                    if(count==1)
+                    {
+                        Intent intent = new Intent(getApplicationContext(),floating.class);
+                        intent.putExtra("Logined User",name.getText().toString());
+                        startActivity(intent);
+                        finish();
                     }
                     else
                     {
-                         Snackbar snackbar1;
-                         View context_View=findViewById(R.id.btn_login);
-                         snackbar1=Snackbar.make(context_View,"wrong entry",Snackbar.LENGTH_SHORT);
-                         View snackbarView = snackbar1.getView();
-                         snackbarView.setBackgroundColor(Color.RED);
-                         snackbar1.show();
+                        Snackbar snackbar;
+                        View context_View=findViewById(R.id.btn_login);
+                        snackbar=Snackbar.make(context_View,"Wrong Entry",Snackbar.LENGTH_SHORT);
+                        snackbar.show();
                     }
 
-                }
             }
             }
         });
 
+        // Sign Text View Code
         sign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,28 +96,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+    // On start of Main Activity every time, It will get a list of users already signed in the application.
     @Override
-    protected void onRestart() {
-        super.onRestart();
+    protected void onResume() {
+        super.onResume();
+
          Gson gson = new Gson();
          String json = sharedPreferences.getString("Values",null);
          Type type = new TypeToken<ArrayList<Object>>(){}.getType();
-         objectList2 = gson.fromJson(json,type);
-
-         if(objectList1!=null && objectList2!=null)
-         {
-             objectList1.addAll(objectList2);
-         }
-         else if(objectList1==null && objectList2!=null)
-         {
-             objectList1=objectList2;
-         }
-         else if(objectList1!=null && objectList2==null)
-         {
-             objectList1=objectList1;
-         }
-
-
+         User_List = gson.fromJson(json,type);
     }
-
 }
